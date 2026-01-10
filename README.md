@@ -13,7 +13,7 @@ Document intelligence platform with multi-doc upload, AI-powered Q&A, semantic s
 
 ## 🛠 Tech Stack
 
-**Frontend**: Next.js 14+, React, Redux, Tailwind CSS | **Backend**: Express.js, TypeScript, MongoDB | **AI**: LangChain, Pinecone, OpenAI | **Python**: FastAPI
+**Frontend**: Next.js 14+, React, Redux, Tailwind CSS | **Backend**: Express.js, TypeScript, MongoDB | **AI**: LangChain, Pinecone, GOOGLE | **Python**: FastAPI
 
 ## 📁 Project Structure
 
@@ -30,7 +30,7 @@ Document intelligence platform with multi-doc upload, AI-powered Q&A, semantic s
 
 ```bash
 cd backend && npm install
-# .env: MONGODB_URI, JWT_SECRET, PINECONE_API_KEY, OPENAI_API_KEY, PORT=5000
+# .env: MONGODB_URI, JWT_SECRET, PINECONE_API_KEY, OOGLE_API_KEY, PORT=5000
 npm run dev      # Runs on http://localhost:5000
 ```
 
@@ -46,7 +46,7 @@ npm run dev      # Runs on http://localhost:3000
 
 ```bash
 cd genai && pip install -r requirements.txt
-# .env: PINECONE_API_KEY, OPENAI_API_KEY, MONGODB_URI
+# .env: PINECONE_API_KEY, GOOGLE_API_KEY, MONGODB_URI
 python -m uvicorn app.main:app --reload    # Runs on http://localhost:8000
 ```
 
@@ -74,7 +74,7 @@ python -m uvicorn app.main:app --reload    # Runs on http://localhost:8000
 
 - **MongoDB error** → Check MONGODB_URI and MongoDB is running
 - **API connection fails** → Verify NEXT_PUBLIC_API_URL and backend running
-- **OpenAI error** → Check OPENAI_API_KEY is valid
+- **Google error** → Check GOOGLE_API_KEY is valid
 - **Slow responses** → Check Pinecone quota and network
 
 ## 📚 Documentation
@@ -97,7 +97,7 @@ python -m uvicorn app.main:app --reload    # Runs on http://localhost:8000
 **All 3 services need these keys:**
 
 - PINECONE_API_KEY (from Pinecone dashboard)
-- OPENAI_API_KEY (from OpenAI)
+- GOOGLE_API_KEY (from GOOGLE GEMINI)
 - MONGODB_URI (local or MongoDB Atlas)
 
 See individual service READMEs for full env setup.
