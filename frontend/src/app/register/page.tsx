@@ -82,19 +82,19 @@ function Page() {
   }
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <div className="flex min-h-svh w-full items-center justify-center p-3 xs:p-6 md:p-10">
       <div className="w-full max-w-sm">
         <div className={"flex flex-col gap-6"}>
           <Card>
-            <CardHeader>
+            <CardHeader className="md:px-6 px-4">
               <CardTitle>Register your account</CardTitle>
               <CardDescription>
                 Enter your email below to register your account
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="md:px-6 px-4">
               <form onSubmit={submitHandler}>
-                <FieldGroup>
+                <FieldGroup className="gap-3">
                   <Field>
                     <FieldLabel htmlFor="name">Name</FieldLabel>
                     <Input

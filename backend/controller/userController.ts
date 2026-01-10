@@ -83,10 +83,24 @@ const registerWithGoogle = expressAsyncHandler(async (req: Request, res: Respons
   const client = getGoogleClient();
   const { token } = req.body;
 
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: process.env.GOOGLE_CLIENT_ID,
-  });
+  if (!token) {
+    return next(new ErrorHandler("Google token is required", 400));
+  }
+
+  if (!client) {
+    return next(new ErrorHandler("Google client not initialized", 500));
+  }
+
+  let ticket;
+  try {
+    ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+  } catch (error) {
+    console.log(error)
+    return next(new ErrorHandler("Invalid Google token", 400));
+  }
 
   const payload = ticket.getPayload();
   if (!payload) {

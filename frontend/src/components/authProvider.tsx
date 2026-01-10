@@ -11,7 +11,7 @@ function AuthProvider({ children }: React.PropsWithChildren) {
   const { user, loading } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (loading && !user) {
+    if (!loading && !user) {
       router.push("/login");
     }
   }, [loading, user, router]);

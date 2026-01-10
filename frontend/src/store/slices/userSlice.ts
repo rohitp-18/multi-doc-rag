@@ -142,13 +142,10 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(loadUserHandler.fulfilled, (state, action) => {
-        console.log(action)
         state.loading = false;
         state.user = action.payload.user;
-      }).addCase(loadUserHandler.rejected, (state, action) => {
-        console.log(action)
+      }).addCase(loadUserHandler.rejected, (state) => {
         state.loading = false;
-        state.error = action.error.message || "Something went wrong";
       })
 
       .addCase(loginWithGoogleHandler.pending, (state) => {

@@ -40,7 +40,7 @@ function Page() {
 
   return (
     <>
-      <div className="flex h-screen w-full bg-white md:ml-0 ml-16 dark:bg-neutral-950">
+      <div className="flex h-screen overflow-hidden w-full bg-white dark:bg-neutral-950">
         <ChatSidebar
           open={slidebarOpen}
           onToggle={() => setSidebarOpen(!slidebarOpen)}

@@ -103,7 +103,7 @@ function ChatSidebar({
 
   return (
     <aside
-      className={`flex flex-col md:static z-10 fixed top-0 left-0 h-screen bg-linear-to-b from-slate-900 via-slate-800 to-slate-900 text-white border-r border-slate-700 transition-all duration-300 ${
+      className={`flex flex-col h-screen bg-linear-to-b from-slate-900 via-slate-800 to-slate-900 text-white border-r border-slate-700 transition-all duration-300 ${
         open ? "w-64 md:w-80" : "xs:w-16 w-12"
       }`}
     >
@@ -297,12 +297,14 @@ function ChatSidebar({
       >
         {open ? (
           <>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-xs text-slate-400 hover:text-white hover:bg-slate-700"
-            >
-              <Settings className="w-4 h-4 mr-2" /> Settings
-            </Button>
+            <Link href="/settings">
+              <Button
+                variant="ghost"
+                className="w-full justify-start text-xs text-slate-400 hover:text-white hover:bg-slate-700"
+              >
+                <Settings className="w-4 h-4 mr-2" /> Settings
+              </Button>
+            </Link>
             <Link href="/">
               <Button
                 variant="ghost"
@@ -314,12 +316,14 @@ function ChatSidebar({
           </>
         ) : (
           <>
-            <Button
-              variant="ghost"
-              className="w-full p-2 justify-center text-slate-400 hover:text-white hover:bg-slate-700"
-            >
-              <Settings className="w-4 h-4" />
-            </Button>
+            <Link href="/settings">
+              <Button
+                variant="ghost"
+                className="w-full p-2 justify-center text-slate-400 hover:text-white hover:bg-slate-700"
+              >
+                <Settings className="w-4 h-4" />
+              </Button>
+            </Link>
             <Link href="/">
               <Button
                 variant="ghost"
