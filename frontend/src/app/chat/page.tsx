@@ -9,6 +9,7 @@ import { clearChatError, clearChatSuccess } from "@/store/slices/chatSlice";
 import ChatView from "@/components/chat/chatView";
 import NewChat from "@/components/chat/newChat";
 import Loader from "@/components/loader";
+import AuthProvider from "@/components/authProvider";
 
 function Page() {
   const [slidebarOpen, setSidebarOpen] = useState(
@@ -19,7 +20,6 @@ function Page() {
   const { chat, error, chatCreated, message } = useSelector(
     (state: RootState) => state.chat
   );
-  const { user, loading } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     if (error) {
@@ -34,12 +34,8 @@ function Page() {
     }
   }, [error, chatCreated, message, dispatch]);
 
-  if (!user || loading) {
-    return <Loader />;
-  }
-
   return (
-    <>
+    <AuthProvider>
       <div className="flex h-screen overflow-hidden w-full bg-white dark:bg-neutral-950">
         <ChatSidebar
           open={slidebarOpen}
@@ -47,7 +43,7 @@ function Page() {
         />
         {chat ? <ChatView /> : <NewChat />}
       </div>
-    </>
+    </AuthProvider>
   );
 }
 

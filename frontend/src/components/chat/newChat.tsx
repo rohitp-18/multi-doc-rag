@@ -13,16 +13,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { File, FileText, Plus, X } from "lucide-react";
 import { toast } from "sonner";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
 import { createChatHandler } from "@/store/slices/chatSlice";
-import axios from "@/store/axios";
+import Loader from "../loader";
 
 function NewChat() {
   const [files, setFiles] = useState<File[]>([]);
   const [uploadDropdownOpen, setUploadDropdownOpen] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
+  const { loading } = useSelector((state: RootState) => state.chat);
 
   const uploadPdfFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
@@ -65,6 +66,10 @@ function NewChat() {
 
     dispatch(createChatHandler(formdata));
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="border-b flex-1 flex flex-col justify-between h-screen dark:border-neutral-800 bg-white dark:bg-neutral-950 p-2 sm:p-4">
