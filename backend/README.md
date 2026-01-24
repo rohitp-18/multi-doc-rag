@@ -15,7 +15,7 @@ PORT=5000
 NODE_ENV=development
 GENAI_SERVICE_URL=http://localhost:8000
 PINECONE_API_KEY=your_pinecone_key
-OPENAI_API_KEY=your_openai_key
+GOOGLE_API_KEY=your_Google_key
 
 # Start development server
 npm run dev
@@ -176,7 +176,7 @@ npm run format
 | NODE_ENV          | development                  | No       |
 | GENAI_SERVICE_URL | http://localhost:8000        | Yes      |
 | PINECONE_API_KEY  | xxx                          | Yes      |
-| OPENAI_API_KEY    | xxx                          | Yes      |
+| GOOGLE_API_KEY    | xxx                          | Yes      |
 
 ## 📄 License
 
