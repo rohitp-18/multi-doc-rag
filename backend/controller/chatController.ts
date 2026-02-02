@@ -115,6 +115,32 @@ const deleteChat = expressAsyncHandler(async (req: Request, res: Response, next:
   res.status(200).json({ success: true, message: "Chat deleted successfully" });
 });
 
+const deleteAllChat = expressAsyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  const responses = await fetch(`http://localhost:8000/api/v1/documents/user-delete/${req.user._id}`, {
+    method: 'DELETE',
+  });
+
+  if (!responses.ok) {
+    return next(new ErrorHandler("Failed to delete documents", 500));
+  }
+
+  let data;
+
+  try {
+    data = await responses.json();
+  } catch (error) {
+    return next(new ErrorHandler("Invalid response from server", 500));
+  }
+
+  if (data.success === false) {
+    return next(new ErrorHandler("Failed to delete chats", 500));
+  }
+
+  const chats = await Chat.updateMany({ userId: req.user._id, isDeleted: false }, { isDeleted: true })
+
+  res.status(200).json({ success: true, message: "Chat deleted successfully" });
+});
+
 const changeChatName = expressAsyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   const chatId = req.params.id;
   const { newName } = req.body;
@@ -130,4 +156,4 @@ const changeChatName = expressAsyncHandler(async (req: Request, res: Response, n
   res.status(200).json({ success: true, chat });
 });
 
-export { createChat, getAllChats, getChatById, deleteChat, changeChatName };
+export { createChat, getAllChats, getChatById, deleteChat, deleteAllChat, changeChatName };

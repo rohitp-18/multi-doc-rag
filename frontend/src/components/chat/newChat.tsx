@@ -192,12 +192,11 @@ function NewChat() {
       </div>
 
       <div className="border-t dark:border-neutral-800 bg-white dark:bg-neutral-950 pt-3 sm:pt-4 space-y-2 sm:space-y-3">
-        <div className="max-w-4xl mx-auto text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-neutral-900 rounded-lg p-2 sm:p-3 border border-gray-200 dark:border-neutral-800">
-          <p className="flex items-start gap-2">
-            <span className="text-base mt-0.5 shrink-0">⚠️</span>
-            <span>
-              AI can sometimes generate incorrect or misleading information.
-              Please verify critical details independently.
+        <div className="max-w-4xl mx-auto text-sm text-gray-500 dark:text-gray-500 bg-amber-50/60 dark:bg-amber-900/10 rounded-lg p-2 border border-amber-100 dark:border-amber-800/20 min-h-fit">
+          <p className="flex items-center gap-1.5">
+            <span className="text-base shrink-0">⚠️</span>
+            <span className="line-clamp-1">
+              AI may generate incorrect information. Verify critical details.
             </span>
           </p>
         </div>

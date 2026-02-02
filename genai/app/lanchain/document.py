@@ -79,3 +79,20 @@ async def delete_chat_files(chat_id: str):
   if ids_to_delete:
     index.delete(ids=ids_to_delete, namespace="rag-uploads")
   return {"deleted_count": len(ids_to_delete)}
+
+async def delete_user_docs(user_id: str):
+  query_response = index.query(
+    namespace="rag-uploads",
+    vector=[0.0]*768,
+    filter={"user_id": user_id},
+    top_k=1000
+  )
+
+  if not query_response.get('matches'): # type: ignore
+    return {"deleted_count": 0}
+  
+  ids_to_delete = [match['id'] for match in query_response['matches']] #pyright: ignore[reportIndexIssue]
+  if ids_to_delete:
+    index.delete(ids=ids_to_delete, namespace='rag-uploads')
+
+  return {"deleted_count": len(ids_to_delete)}

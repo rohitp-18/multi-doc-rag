@@ -21,5 +21,17 @@ async def upload_pdf_file(
 
 @router.delete("/delete/{id}", response_model=UploadFileOut, status_code=status.HTTP_200_OK)
 async def delete_file(id: str):
-  await delete_chat_files(id)
+  while True:
+    res =  await delete_chat_files(id)
+    if res.get("deleted_count") == 0:
+      break
+  return {"success": True}
+
+@router.delete("/user-delete/{id}",response_model=UploadFileOut, status_code=status.HTTP_200_OK)
+async def delete_user_file(id:str):
+  while True:
+    res = await delete_user_file(id)
+    if res.get("deleted_count") == 0:
+      break
+  
   return {"success": True}
