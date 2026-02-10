@@ -23,6 +23,7 @@ import {
   loginHandler,
 } from "@/store/slices/userSlice";
 import { AppDispatch, RootState } from "@/store/store";
+import { User } from "lucide-react";
 import Link from "next/dist/client/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -36,8 +37,14 @@ function Page() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const { user, loading, error, success, message } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
+
+  function handleGuestLogin() {
+    dispatch(
+      loginHandler({ email: "guest@example.com", password: "guestpassword" }),
+    );
+  }
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,6 +95,14 @@ function Page() {
               </CardDescription>
             </CardHeader>
             <CardContent className="md:px-6 px-4">
+              <Button
+                onClick={handleGuestLogin}
+                variant="outline"
+                className="w-full rounded-md mb-4"
+              >
+                <User className="mr-2 h-4 w-4" />
+                Continue as Guest
+              </Button>
               <form onSubmit={submitHandler}>
                 <FieldGroup className="gap-3">
                   <Field>

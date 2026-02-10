@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { Ellipsis, Home, Menu, Settings, X } from "lucide-react";
+import { Ellipsis, Home, Menu, Settings, X, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
@@ -43,6 +43,8 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { logoutHandler } from "@/store/slices/userSlice";
 
 function ChatSidebar({
   open,
@@ -58,6 +60,10 @@ function ChatSidebar({
 
   const dispatch = useDispatch<AppDispatch>();
   const { chats } = useSelector((state: RootState) => state.chat);
+  const { user, message, error, loading } = useSelector(
+    (state: RootState) => state.user,
+  );
+  const router = useRouter();
 
   const deleteChatDialog = (chat: chat) => {
     setDialogChat(chat);
@@ -100,6 +106,21 @@ function ChatSidebar({
   useEffect(() => {
     dispatch(fetchAllChatsHandler());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+    if (message) {
+      toast.success(message);
+    }
+  }, [error, message]);
+
+  useEffect(() => {
+    if (!user && !loading) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
 
   return (
     <aside
@@ -314,6 +335,14 @@ function ChatSidebar({
                 <Home className="w-6 h-6 mr-2" /> Home
               </Button>
             </Link>
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-sm text-slate-400 hover:text-white hover:bg-slate-700"
+              onClick={() => dispatch(logoutHandler())}
+              disabled={loading}
+            >
+              <LogOut className="w-6 h-6 mr-2" /> Logout
+            </Button>
           </>
         ) : (
           <>
@@ -333,6 +362,14 @@ function ChatSidebar({
                 <Home className="w-6 h-6" />
               </Button>
             </Link>
+            <Button
+              variant="ghost"
+              className="p-2 justify-center text-slate-400 hover:text-white hover:bg-slate-700"
+              onClick={() => dispatch(logoutHandler())}
+              disabled={loading}
+            >
+              <LogOut className="w-6 h-6" />
+            </Button>
           </>
         )}
       </div>

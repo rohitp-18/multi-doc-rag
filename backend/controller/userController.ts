@@ -122,4 +122,15 @@ const registerWithGoogle = expressAsyncHandler(async (req: Request, res: Respons
   sendToken(res, user, 201);
 });
 
-export { registerUser, loginUser, loadUser, loginWithGoogle, registerWithGoogle };
+const logoutUser = expressAsyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
+  });
+});
+
+export { registerUser, loginUser, loadUser, loginWithGoogle, registerWithGoogle, logoutUser };

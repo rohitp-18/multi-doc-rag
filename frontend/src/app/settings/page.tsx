@@ -3,7 +3,6 @@
 import AuthProvider from "@/components/authProvider";
 import { Button } from "@/components/ui/button";
 import UserNavbar from "@/components/userNavbar";
-import axios from "@/store/axios";
 import { deleteAllChatHandler } from "@/store/slices/chatSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import React, { useEffect } from "react";
