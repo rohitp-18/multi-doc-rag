@@ -42,7 +42,7 @@ function Page() {
 
   function handleGuestLogin() {
     dispatch(
-      loginHandler({ email: "guest@example.com", password: "guestpassword" }),
+      loginHandler({ email: "guest@mail.com", password: "guestpassword" }),
     );
   }
 

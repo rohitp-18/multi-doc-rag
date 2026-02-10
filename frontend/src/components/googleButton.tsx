@@ -11,12 +11,11 @@ import {
   loginWithGoogleHandler,
   registerWithGoogleHandler,
 } from "@/store/slices/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
 
 function GoogleButton({ title }: { title: string }) {
   const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector((state: RootState) => state.user);
 
   const successHandler = async (credentialResponse: CredentialResponse) => {
     const idToken = credentialResponse.credential;
@@ -43,6 +42,7 @@ function GoogleButton({ title }: { title: string }) {
           onSuccess={successHandler}
           onError={() => toast.error("Google Login Failed")}
           useOneTap
+          text="continue_with"
           logo_alignment="center"
           width={"100%"}
         />
