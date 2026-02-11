@@ -1,5 +1,5 @@
 from fastapi import APIRouter, File, UploadFile, Form, status
-from app.lanchain.document import upload_pdf, upload_text, delete_chat_files
+from app.lanchain.document import upload_docx, upload_pdf, upload_text, delete_chat_files
 from app.scheama.document import UploadFileOut
 
 from typing import Annotated, List
@@ -17,6 +17,8 @@ async def upload_pdf_file(
       await upload_pdf(chat_id, user_id, file)
     elif file.content_type == "text/plain":
       await upload_text(chat_id, user_id, file)
+    elif file.content_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+      await upload_docx(chat_id, user_id, file)
   return {"success": True}
 
 @router.delete("/delete/{id}", response_model=UploadFileOut, status_code=status.HTTP_200_OK)

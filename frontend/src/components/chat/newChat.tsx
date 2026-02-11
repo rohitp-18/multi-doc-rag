@@ -36,6 +36,17 @@ function NewChat() {
     }
   };
 
+  const uploadDocxFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
+    if (selectedFiles && selectedFiles.length > 0) {
+      if (selectedFiles.length > 2) {
+        toast.error("You can upload a maximum of 2 files at a time.");
+        return;
+      }
+      setFiles([...Array.from(selectedFiles), ...(files ?? [])].slice(0, 2));
+    }
+  };
+
   const uploadTextFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
@@ -158,6 +169,14 @@ function NewChat() {
                       <File className="w-4 h-4 mr-2" />
                       Upload Text Files
                     </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        document.getElementById("docx-upload")?.click()
+                      }
+                    >
+                      <FileText className="w-4 h-4 mr-2" />
+                      Upload DOCX Files
+                    </DropdownMenuItem>
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -186,6 +205,14 @@ function NewChat() {
             multiple
             onChange={uploadTextFiles}
             id="txt-upload"
+            className="hidden"
+          />
+          <input
+            type="file"
+            accept=".docx"
+            multiple
+            onChange={uploadDocxFiles}
+            id="docx-upload"
             className="hidden"
           />
         </div>

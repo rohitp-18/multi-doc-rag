@@ -35,12 +35,17 @@ const createChat = expressAsyncHandler(async (req: Request, res: Response, next:
   form.append('chat_id', chat._id.toString());
   form.append('user_id', req.user!._id.toString());
 
-  const responses = await fetch(`http://localhost:8000/api/v1/documents/upload`, {
+  const responses = await fetch(`${process.env.FASTAPI_URL}/api/v1/documents/upload`, {
     method: 'POST',
     body: form,
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${process.env.FASTAPI_KEY}`,
+    }
   });
 
   if (!responses.ok) {
+    await Chat.findByIdAndDelete(chat._id)
     return next(new ErrorHandler("Failed to upload documents", 500));
   }
 
@@ -48,10 +53,12 @@ const createChat = expressAsyncHandler(async (req: Request, res: Response, next:
   try {
     data = await responses.json();
   } catch (error) {
+    await Chat.findByIdAndDelete(chat._id)
     return next(new ErrorHandler("Invalid response from server", 500));
   }
 
   if (data.success === false) {
+    await Chat.findByIdAndDelete(chat._id)
     return next(new ErrorHandler("Failed to upload documents", 500));
   }
 
@@ -90,8 +97,12 @@ const deleteChat = expressAsyncHandler(async (req: Request, res: Response, next:
     return next(new ErrorHandler("Chat not found", 404));
   }
 
-  const responses = await fetch(`http://localhost:8000/api/v1/documents/delete/${chat._id}`, {
+  const responses = await fetch(`${process.env.FASTAPI_URL}/api/v1/documents/delete/${chat._id}`, {
     method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${process.env.FASTAPI_KEY}`,
+    }
   });
 
   if (!responses.ok) {
@@ -116,8 +127,12 @@ const deleteChat = expressAsyncHandler(async (req: Request, res: Response, next:
 });
 
 const deleteAllChat = expressAsyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-  const responses = await fetch(`http://localhost:8000/api/v1/documents/user-delete/${req.user._id}`, {
+  const responses = await fetch(`${process.env.FASTAPI_URL}/api/v1/documents/user-delete/${req.user._id}`, {
     method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${process.env.FASTAPI_KEY}`,
+    }
   });
 
   if (!responses.ok) {
