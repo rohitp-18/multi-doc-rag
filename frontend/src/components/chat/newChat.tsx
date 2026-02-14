@@ -184,7 +184,8 @@ function NewChat() {
             {files.length > 0 && (
               <Button
                 onClick={newChatHandler}
-                className="bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white transition-all rounded-lg sm:rounded-xl py-2 sm:py-3 font-semibold shadow-lg hover:shadow-xl text-sm sm:text-base"
+                size={"lg"}
+                className="bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white transition-all rounded-lg sm:rounded-xl font-semibold shadow-lg hover:shadow-xl text-sm sm:text-base"
               >
                 Start Chat
               </Button>

@@ -13,12 +13,12 @@ import AuthProvider from "@/components/authProvider";
 
 function Page() {
   const [slidebarOpen, setSidebarOpen] = useState(
-    typeof window !== "undefined" && window.innerWidth >= 768
+    typeof window !== "undefined" && window.innerWidth >= 768,
   );
 
   const dispatch = useDispatch<AppDispatch>();
   const { chat, error, chatCreated, message } = useSelector(
-    (state: RootState) => state.chat
+    (state: RootState) => state.chat,
   );
 
   useEffect(() => {

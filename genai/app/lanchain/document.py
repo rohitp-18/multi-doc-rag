@@ -12,6 +12,9 @@ from io import BytesIO
 
 load_dotenv()
 
+def chunk_array(arr, chunk_size):
+  for i in range(0, len(arr), chunk_size):
+    yield arr[i:i + chunk_size]
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200, separators=["\n\n", "\n", " ", ""])
 pc = get_pinecone_client()
@@ -42,15 +45,16 @@ async def upload_pdf(chat_id: str, user_id: str, file: UploadFile = File(...)):
     docs.append({"page_content": text, "page": page_number})
 
   # embedding_vectors = embeddings.embed_documents([doc["page_content"] for doc in docs])
-  embeddings = pc.inference.embed(
-    model="multilingual-e5-large",
-    inputs=[doc["page_content"] for doc in docs],
-    parameters={"input_type": "passage", "truncate": "END"}
-  )
-  index.upsert(
-    vectors=[(str(uuid.uuid4()), vec['values'], {"page_content": docs[i]["page_content"], "page": docs[i]["page"], "chat_id": chat_id, "user_id": user_id, "file_name": file.filename}) for i, vec in enumerate(embeddings)], 
-    namespace="rag-uploads"
-  )
+  for chunk in chunk_array(docs, 96):
+    embeddings = pc.inference.embed(
+      model="multilingual-e5-large",
+      inputs=[doc["page_content"] for doc in chunk],
+      parameters={"input_type": "passage", "truncate": "END"}
+    )
+    index.upsert(
+      vectors=[(str(uuid.uuid4()), vec['values'], {"page_content": chunk[i]["page_content"], "page": chunk[i]["page"], "chat_id": chat_id, "user_id": user_id, "file_name": file.filename}) for i, vec in enumerate(embeddings)], 
+      namespace="rag-uploads"
+    )
 
   return {"num_pages": len(page_texts), "num_chunks": len(docs)}
 
@@ -61,17 +65,18 @@ async def upload_text(chat_id: str, user_id: str, file: UploadFile = File(...)):
   texts = text_splitter.split_text(content)
   docs = [{"page_content": text} for text in texts]
 
-  embedding_vectors = pc.inference.embed(
-    model="multilingual-e5-large",
-    inputs=[doc["page_content"] for doc in docs],
-    parameters={"input_type": "passage", "truncate": "END"}
-  )
-  index.upsert(
-    vectors=[(str(uuid.uuid4()), vec['values'], {"page_content": docs[i]["page_content"], "chat_id": chat_id, "user_id": user_id, "file_name": file.filename}) for i, vec in enumerate(embedding_vectors)], 
-    namespace="rag-uploads"
-  )
+  for chunk in chunk_array(docs, 96):    
+    embedding_vectors = pc.inference.embed(
+      model="multilingual-e5-large",
+      inputs=[doc["page_content"] for doc in chunk],
+      parameters={"input_type": "passage", "truncate": "END"}
+    )
+    index.upsert(
+      vectors=[(str(uuid.uuid4()), vec['values'], {"page_content": chunk[i]["page_content"], "chat_id": chat_id, "user_id": user_id, "file_name": file.filename}) for i, vec in enumerate(embedding_vectors)], 
+      namespace="rag-uploads"
+    )
 
-  return {"num_chunks": len(docs), "embeddings_sample": embedding_vectors[:2]}
+  return {"num_chunks": len(docs)}
 
 async def upload_docx(chat_id: str, user_id: str, file: UploadFile = File(...)):
   content = await file.read()
@@ -93,15 +98,16 @@ async def upload_docx(chat_id: str, user_id: str, file: UploadFile = File(...)):
       page_number += 1
     docs.append({"page_content": text, "page": page_number})
 
-  embedding_vectors = pc.inference.embed(
-    model="multilingual-e5-large",
-    inputs=[doc["page_content"] for doc in docs],
-    parameters={"input_type": "passage", "truncate": "END"}
-  )
-  index.upsert(
-    vectors=[(str(uuid.uuid4()), vec['values'], {"page_content": docs[i]["page_content"], "page": docs[i]["page"], "chat_id": chat_id, "user_id": user_id, "file_name": file.filename}) for i, vec in enumerate(embedding_vectors)], 
-    namespace="rag-uploads"
-  )
+  for chunk in chunk_array(docs, 96):
+    embedding_vectors = pc.inference.embed(
+      model="multilingual-e5-large",
+      inputs=[doc["page_content"] for doc in chunk],
+      parameters={"input_type": "passage", "truncate": "END"}
+    )
+    index.upsert(
+      vectors=[(str(uuid.uuid4()), vec['values'], {"page_content": chunk[i]["page_content"], "page": chunk[i]["page"], "chat_id": chat_id, "user_id": user_id, "file_name": file.filename}) for i, vec in enumerate(embedding_vectors)], 
+      namespace="rag-uploads"
+    )
 
   return {"num_pages": len(page_texts), "num_chunks": len(docs)}
 

@@ -16,6 +16,10 @@ function AuthProvider({ children }: React.PropsWithChildren) {
     }
   }, [loading, user, router]);
 
+  if (loading) {
+    <Loader />;
+  }
+
   return <>{user && !loading ? children : <Loader />}</>;
 }
 

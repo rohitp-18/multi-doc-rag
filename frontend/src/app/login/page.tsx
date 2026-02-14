@@ -2,6 +2,7 @@
 
 import GoogleButton from "@/components/googleButton";
 import Loader from "@/components/loader";
+import Navbar from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -84,72 +85,75 @@ function Page() {
   }
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-3 xs:p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <div className={"flex flex-col gap-6"}>
-          <Card>
-            <CardHeader className="md:px-6 px-4">
-              <CardTitle>Login to your account</CardTitle>
-              <CardDescription>
-                Enter your email below to login to your account
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="md:px-6 px-4">
-              <Button
-                onClick={handleGuestLogin}
-                variant="outline"
-                className="w-full rounded-md mb-4"
-              >
-                <User className="mr-2 h-4 w-4" />
-                Continue as Guest
-              </Button>
-              <form onSubmit={submitHandler}>
-                <FieldGroup className="gap-3">
-                  <Field>
-                    <FieldLabel htmlFor="email">Email</FieldLabel>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Field>
-                  <Field>
-                    <div className="flex items-center">
-                      <FieldLabel htmlFor="password">Password</FieldLabel>
-                      {/* future update
+    <>
+      <Navbar />
+      <div className="flex min-h-svh w-full items-center justify-center p-3 xs:p-6 md:p-10">
+        <div className="w-full max-w-sm">
+          <div className={"flex flex-col gap-6"}>
+            <Card>
+              <CardHeader className="md:px-6 px-4">
+                <CardTitle>Login to your account</CardTitle>
+                <CardDescription>
+                  Enter your email below to login to your account
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="md:px-6 px-4">
+                <Button
+                  onClick={handleGuestLogin}
+                  variant="outline"
+                  className="w-full rounded-md mb-4"
+                >
+                  <User className="mr-2 h-4 w-4" />
+                  Continue as Guest
+                </Button>
+                <form onSubmit={submitHandler}>
+                  <FieldGroup className="gap-3">
+                    <Field>
+                      <FieldLabel htmlFor="email">Email</FieldLabel>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="m@example.com"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </Field>
+                    <Field>
+                      <div className="flex items-center">
+                        <FieldLabel htmlFor="password">Password</FieldLabel>
+                        {/* future update
                        <a
                         href="#"
                         className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                       >
                         Forgot your password?
                       </a> */}
-                    </div>
-                    <Input
-                      id="password"
-                      type="password"
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </Field>
-                  <Field>
-                    <Button type="submit">Login</Button>
-                    <GoogleButton title="Login with Google" />
-                    <FieldDescription className="text-center">
-                      Don&apos;t have an account?{" "}
-                      <Link href="/register">Sign up</Link>
-                    </FieldDescription>
-                  </Field>
-                </FieldGroup>
-              </form>
-            </CardContent>
-          </Card>
+                      </div>
+                      <Input
+                        id="password"
+                        type="password"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </Field>
+                    <Field>
+                      <Button type="submit">Login</Button>
+                      <GoogleButton title="Login with Google" />
+                      <FieldDescription className="text-center">
+                        Don&apos;t have an account?{" "}
+                        <Link href="/register">Sign up</Link>
+                      </FieldDescription>
+                    </Field>
+                  </FieldGroup>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
