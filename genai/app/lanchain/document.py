@@ -31,14 +31,11 @@ async def upload_pdf(chat_id: str, user_id: str, file: UploadFile = File(...)):
       page_texts.append(len(page.get_text()))
 
   texts = text_splitter.split_text(full_text)
-  page_number = 1
+  page_number = 0
   count_words = 0
   docs = []
 
   for i, text in enumerate(texts):
-    count_words += len(text.split())
-    # Find which page this chunk belongs to
-
     count_words += len(text.split())
     if count_words >= page_texts[page_number]:
       page_number += 1
