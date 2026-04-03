@@ -77,7 +77,7 @@ genai/
 
 - Load multiple file formats (PDF, TXT, DOCX)
 - Split documents into chunks with configurable overlap
-- Generate embeddings using Google GenAI
+- Generate embeddings using Pinecone embedding model
 - Store in Pinecone vector database
 - Track processing status in MongoDB
 
