@@ -1,6 +1,6 @@
 from fastapi import APIRouter, File, UploadFile, Form, status
 from app.lanchain.document import upload_docx, upload_pdf, upload_text, delete_chat_files
-from app.scheama.document import UploadFileOut
+from app.schema.document import UploadFileOut
 
 from typing import Annotated, List
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter,status
 
-from app.scheama.ask_question import AskQuestionRequest, AskQuestionResponse
+from app.schema.ask_question import AskQuestionRequest, AskQuestionResponse
 from app.lanchain.ask_question import ask_question_service
 
 router = APIRouter()

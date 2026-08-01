@@ -1,6 +1,6 @@
 from datetime import datetime
 from app.config.langchain import get_langchain_agent, AgentContext, CustomMiddleware
-from app.scheama.ask_question import AskQuestionRequest
+from app.schema.ask_question import AskQuestionRequest
 
 
 async def ask_question_service(request: AskQuestionRequest):
