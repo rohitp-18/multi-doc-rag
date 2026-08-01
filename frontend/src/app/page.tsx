@@ -66,6 +66,40 @@ export default function Home() {
             </div>
           </div>
         </div>
+        {/* info about spell checkers and suggestions */}
+        <div className="bg-gray-50 py-12 sm:py-16 lg:py-20">
+          <div className="max-w-6xl xl:container mx-auto px-4 sm:px-6 lg:px-8 2xl:px-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <div className="space-y-6 md:order-2">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+                  Spell Check and Suggestions
+                </h2>
+                <p className="text-base sm:text-lg lg:text-xl text-gray-600">
+                  Our spell checker helps you identify and correct spelling
+                  errors in your text. It provides suggestions for misspelled
+                  words, ensuring your content is accurate and professional.
+                </p>
+                <Link href="/spell-check">
+                  <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 sm:px-8 py-3 rounded-lg font-semibold transition w-full sm:w-auto text-center">
+                    Try Spell Checker
+                  </button>
+                </Link>
+              </div>
+              <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 md:order-1">
+                <div className="bg-gray-100 rounded-lg p-4">
+                  <p className="text-gray-800 text-sm">
+                    Ths is an exmple of a sentnce with speling errors.
+                  </p>
+                </div>
+                <div className="bg-indigo-600 text-white rounded-lg p-4 mt-4">
+                  <p className="text-sm">
+                    This is an example of a sentence with spelling errors.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );
