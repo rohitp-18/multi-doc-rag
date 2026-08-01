@@ -7,6 +7,7 @@ import path from 'path';
 import userRouters from "./routers/userRouters"
 import chatRouter from "./routers/chatRouter";
 import messageRouter from "./routers/messageRouter";
+import spellRouter from "./routers/spellRouter";
 
 import errorMiddleware from './middlewares/error';
 import mongodb from './config/mongodb';
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use("/api/v1/user", userRouters)
 app.use("/api/v1/chat", chatRouter)
 app.use("/api/v1/message", messageRouter)
+app.use("/api/v1/spell", spellRouter)
 
 app.use((req, res) => {
   return res.status(404).json({
